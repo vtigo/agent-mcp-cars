@@ -1,4 +1,4 @@
-from app.cli.interface import start_prompt_loop
+from app.cli.interface import cli_interface
 
 def main():
-    start_prompt_loop()
+    cli_interface()
