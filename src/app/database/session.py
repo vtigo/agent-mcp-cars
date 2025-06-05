@@ -1,16 +1,16 @@
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy import text
+from sqlalchemy.orm import sessionmaker
 from app.database.config import DATABASE_URL
-
-# from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
 
-engine = create_engine(DATABASE_URL, echo=True, future=True)
+engine = create_engine(DATABASE_URL, future=True)
 
-# Session = sessionmaker(engine)
-def check_conn():
+Session = sessionmaker(engine)
+
+def check_database_connection():
     try:
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
