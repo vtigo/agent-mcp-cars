@@ -1,6 +1,5 @@
 import random
-from sqlalchemy.orm import Session
-from app.database.session import engine
+from app.database.session import Session, engine
 from app.models.car import Car, Base, CategoryEnum, ColorEnum, FuelTypeEnum, TransmissionEnum
 
 brand_data = {
@@ -41,10 +40,11 @@ def generate_fake_car() -> Car:
     )
 
 def seed_data():
+    """Seed """
     Base.metadata.create_all(engine)
-
-    with Session(engine) as session:
-        # calculate how many cars to seed to reach 100
+    
+    with Session() as session:
+        # Calculate how many cars to seed to reach 100 cars in the database
         existing_cars_count = session.query(Car).count()
         seed_count = 100 - existing_cars_count
 
@@ -59,7 +59,7 @@ def seed_data():
         print("Done seeding.")
 
 def wipe_data():
-    with Session(engine) as session:
+    with Session() as session:
         print("Wiping the db clean...")
         session.query(Car).delete()
         session.commit()

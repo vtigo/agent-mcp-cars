@@ -7,7 +7,6 @@ from app.database.config import DATABASE_URL
 load_dotenv()
 
 engine = create_engine(DATABASE_URL, future=True)
-
 Session = sessionmaker(engine)
 
 def check_database_connection():

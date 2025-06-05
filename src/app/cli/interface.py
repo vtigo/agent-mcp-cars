@@ -2,6 +2,7 @@ import typer
 from app.agent.agent_llm import send_prompt
 from app.database.session import check_database_connection
 from app.database.seed import seed_data, wipe_data
+from app.mcp.server import run_server
 
 app = typer.Typer()
 
@@ -9,7 +10,7 @@ app = typer.Typer()
 def prompt():
     """Run a prompt loop to talk with the agent."""
     typer.echo("\nPress Ctrl+C to exit.\n\nMick: Hello! How can i assist you?")
-    
+
     # TODO: Gracefully exit the loop
     while True:
         try:
@@ -30,9 +31,14 @@ def check_db():
 
 @app.command()
 def seed_db(reseed: bool = False):
-    """Seed random data to the db until we max 100 cars. Use --reseed to wipe and reseed"""
+    """Seed random data to the db until we max 100 cars. Use --reseed to wipe and reseed."""
     if reseed: wipe_data()
     seed_data()
+
+@app.command()
+def mcp():
+    """Start the MCP server at port 3333."""
+    run_server()
 
 def cli_interface():
     """Initialize the cli interface to wait for commands."""

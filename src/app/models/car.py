@@ -45,10 +45,10 @@ class Car(Base):
         def val(v): return v.value if isinstance(v, enum.Enum) else v
 
         return (
-            f"Car(id={self.id}, brand={self.brand}, model_name={self.model_name}, "
-            f"category={val(self.category)}, fuel_type={val(self.fuel_type)}, "
-            f"year={self.model_year}, color={val(self.color)}, "
-            f"price={self.price}, doors={self.door_count}, "
-            f"transmission={val(self.transmission)}, safety_features={self.safety_features})"
-        )
+                f"Car(id={self.id}, brand={self.brand}, model_name={self.model_name}, "
+                      f"category={val(self.category)}, fuel_type={val(self.fuel_type)}, "
+                      f"year={self.model_year}, color={val(self.color)}, "
+                      f"price={self.price}, doors={self.door_count}, "
+                      f"transmission={val(self.transmission)}, safety_features={self.safety_features})"
+                )
 

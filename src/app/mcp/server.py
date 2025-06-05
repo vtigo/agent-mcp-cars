@@ -12,45 +12,69 @@ import json
 from sqlalchemy.exc import SQLAlchemyError
 
 def handle_request(conn, addr):
-    # TODO: deal with addr
+    """
+    Receives a JSON payload {"action": "...", "filters": {...}},
+    executes the corresponding command, and returns a plain-text response
+    that includes all attributes for each matching Car.
+    """
     with conn:
         try:
             data = conn.recv(4096)
             if not data:
                 return
 
-            # Decode JSON
+            # Decode incoming JSON
             try:
                 request = json.loads(data.decode("utf-8"))
             except json.JSONDecodeError:
-                raise ValueError("Invalid JSON")
+                raise ValueError("Invalid JSON request")
 
-            # Extract action
+            # Retrieve the action and do the necessary operations
             action = request.get("action")
             if action == "get_cars":
-                # Ensure filters is a dict, default to {}
+                # Validate filters
                 filters = request.get("filters", {})
                 if not isinstance(filters, dict):
-                    raise ValueError("“filters” must be a JSON object")
+                    raise ValueError("“filters” must be a JSON object (dict)")
 
-                # Return [] if no rows match
-                results = query_cars(filters)
-                response = {"status": "ok", "results": results}
+                # Query the database
+                cars = query_cars(filters)
+
+                # Build the response
+                if not cars:
+                    response_str = "No cars found for the given filters."
+                else:
+                    lines = []
+                    for c in cars:
+                        lines.append(
+                                f"- ID: {c['id']}, "
+                                f"Brand: {c['brand']}, "
+                                f"Model: {c['model_name']}, "
+                                f"Year: {c['model_year']}, "
+                                f"Color: {c['color']}, "
+                                f"Category: {c['category']}, "
+                                f"Fuel: {c['fuel_type']}, "
+                                f"Doors: {c['door_count']}, "
+                                f"Transmission: {c['transmission']}, "
+                                f"Price: R${c['price']}, "
+                                f"Safety Features: {c['safety_features']}"
+                                )
+                    response_str = "Found {} car(s):\n{}".format(len(cars), "\n".join(lines))
 
             else:
-                response = {"status": "error", "message": f"Unknown action: {action}"}
+                response_str = f"Unknown action: {action}"
 
-        except ValueError as ve:
-            response = {"status": "error", "message": str(ve)}
+        except ValueError as e:
+            response_str = f"[MCP SERVER ERROR]: {e}"
 
         except SQLAlchemyError as e:
-            response = {"status": "error", "message": f"Database Error: {e}"}
+            response_str = f"[MCP SERVER ERROR]: Database Error: {e}"
 
         except Exception as e:
-            response = {"status": "error", "message": str(e)}
+            response_str = f"[MCP SERVER ERROR]: {e}"
 
-        # Send back a JSON with the response
-        conn.sendall(json.dumps(response).encode("utf-8"))
+        # Send back a plain text response
+        conn.sendall(response_str.encode("utf-8"))
 
 
 def query_cars(filters: dict) -> list:
@@ -60,7 +84,7 @@ def query_cars(filters: dict) -> list:
     - If filters is empty ({}), this will return [] (no cars).
     """
 
-    # Build clean_filters: only keep non‐empty values that match Car attributes
+    # We only want non‐empty filter values that match Car attributes
     clean_filters = {}
     for key, val in filters.items():
         # ignore None or empty‐string filters
