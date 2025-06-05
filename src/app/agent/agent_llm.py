@@ -68,10 +68,13 @@ def send_prompt(prompt: str) -> str:
     try:
         result = agent.invoke({"messages": [{"role": "user", "content": prompt}]})
         messages = result.get("messages", [])
-        # Iterate in reverse to find the last AI message with content
+
+        # Reverse iterate through message objects and extract valid AI responses
         for msg in reversed(messages):
-            if msg.get("type") == "ai" and msg.get("content"):
-                return msg["content"]
-        return "[No AI response]"
+            if getattr(msg, "type", None) == "ai" and getattr(msg, "content", "").strip():
+                return msg.content
+
+        return "[No Valid AI response]"
     except Exception as e:
         return f"[AGENT ERROR]: {e}"
+
