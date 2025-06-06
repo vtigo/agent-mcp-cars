@@ -1,10 +1,14 @@
+import os
 import json
 import socket
+from dotenv  import load_dotenv
 
-HOST = "127.0.0.1"
-PORT = 3333
+load_dotenv()
 
-def send_mcp_command(action: str, filters_json: str, host=HOST, port=PORT, timeout=5) -> str:
+MCP_HOST = os.getenv("MCP_HOST", "127.0.0.1")
+MCP_PORT = int(os.getenv("MCP_PORT", 3333))
+
+def send_mcp_command(action: str, filters_json: str, host=MCP_HOST, port=MCP_PORT, timeout=5) -> str:
     try:
         filters = json.loads(filters_json)
         request = {

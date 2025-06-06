@@ -71,7 +71,7 @@ system_prompt = (
         "=== End of Examples ===\n\n"
 
         "Always reason step-by-step and clearly decide whether to use the tool.\n"
-        "After the tool returns the result, write a concise answer that summarizes "
+        "After the tool returns the result, write a concise answer that summarizes"
         "how many matches were found, and list every car."
         )
 

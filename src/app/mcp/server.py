@@ -1,15 +1,16 @@
+import os
 import json
 import socket
 import threading
+from dotenv import load_dotenv
 from sqlalchemy.exc import SQLAlchemyError
 from app.database.session import Session 
 from app.models.car import Car
 
-HOST = "127.0.0.1"
-PORT = 3333
+load_dotenv()
 
-import json
-from sqlalchemy.exc import SQLAlchemyError
+MCP_HOST = os.getenv("MCP_HOST", "127.0.0.1")
+MCP_PORT = int(os.getenv("MCP_PORT", 3333))
 
 def handle_request(conn, addr):
     """
@@ -22,7 +23,7 @@ def handle_request(conn, addr):
             data = conn.recv(4096)
             if not data:
                 return
-
+            
             # Decode incoming JSON
             try:
                 request = json.loads(data.decode("utf-8"))
@@ -109,26 +110,27 @@ def query_cars(filters: dict) -> list:
 
     return [
             {
-                "id":              c.id,
-                "brand":           c.brand,
-                "model_name":      c.model_name,
-                "model_year":      c.model_year,
-                "color":           c.color,
-                "category":        c.category,
-                "fuel_type":       c.fuel_type,
-                "door_count":      c.door_count,
-                "transmission":    c.transmission,
-                "price":           c.price,
+                "id": c.id,
+                "brand": c.brand,
+                "model_name": c.model_name,
+                "model_year": c.model_year,
+                "color": c.color,
+                "category": c.category,
+                "fuel_type": c.fuel_type,
+                "door_count": c.door_count,
+                "transmission": c.transmission,
+                "price": c.price,
                 "safety_features": c.safety_features,
                 }
             for c in results
             ]
 
 def run_server():
+    """Start the MCP server"""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind((HOST, PORT))
+        s.bind((MCP_HOST,MCP_PORT))
         s.listen()
-        print(f"MCP server running on {HOST}:{PORT}")
+        print(f"MCP server running on {MCP_HOST}:{MCP_PORT}")
         while True:
             conn, addr = s.accept()
             thread = threading.Thread(target=handle_request, args=(conn, addr))
