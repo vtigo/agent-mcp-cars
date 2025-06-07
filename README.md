@@ -28,13 +28,13 @@ cd agent-mcp-cars
 Create a `.env` file in the root of the project:
 
 ```env
-DATABASE_URL=sqlite:///./carros.db
+DATABASE_URL=sqlite:///./cars.db
 TOGETHER_API_KEY=sk-<your-together-api-key>
 MCP_HOST=127.0.0.1
 MCP_PORT=3333
 ```
 
-> 💡 If you're not using Together.ai, you can omit the `TOGETHER_API_KEY` line.
+> 💡 If you're not using Together.ai, you can change the `TOGETHER_API_KEY` line to the provider api key that you are using, following the **lagchain** docs.
 
 ---
 
@@ -156,6 +156,6 @@ uv run main.py prompt
 
 * All commands assume you're in the **project root**
 * Replace `uv run` with `PYTHONPATH=src python` if not using `uv`
-* The database file (`carros.db`) is created automatically when seeding
+* The database file (`cars.db`) is created automatically when seeding
 
 ---
