@@ -1,4 +1,4 @@
-# 🧠 AGENT MCP CARS
+# AGENT MCP CARS
 
 This is a simple implementation of a CLI interface for interacting with an agent that communicates with an MCP server and a car database.
 
@@ -6,7 +6,7 @@ The goal is to build an AI agent that can decide when to call tools — includin
 
 ---
 
-## 🚀 Running the Project
+## Running the Project
 
 This guide explains how to run the complete system — including the MCP server, CLI interface, and database.
 
@@ -33,7 +33,7 @@ MCP_PORT=3333
 💡 If you're not using Together.ai, you can omit the TOGETHER_API_KEY line.
 
 3. Install Dependencies
-✅ Option A: Using uv (recommended)
+Option A: Using uv (recommended)
 
 ```bash
 uv sync
@@ -46,7 +46,7 @@ This will:
 
     Set up the environment for running CLI commands via uv run
 
-✅ Option B: Using pip
+Option B: Using pip
 
 ```bash
 python -m venv .venv
@@ -95,7 +95,7 @@ Check that the database connection is functional and print a summary.
 
     uv run main.py check-db
 
-🔁 Notes
+Notes
 
     Replace uv run ... with PYTHONPATH=src python main.py ... if not using uv
 
@@ -103,7 +103,7 @@ Check that the database connection is functional and print a summary.
 
     The database file will be created automatically as carros.db in the root directory
 
-🛠 Example Workflow
+Example Workflow
 
 # Seed the database
 uv run main.py seed --reseed
