@@ -51,9 +51,6 @@ This project requires access to a language model via Together.ai. If you do not 
 ```env
 TOGETHER_API_KEY=sk-<your-together-api-key>
 ```
-
-> If you are using a different provider, consult the LangChain documentation for the appropriate environment variables, you will laso have to change the model at **agent_llm.py**.
-
 ---
 
 ### 3. Install Dependencies
