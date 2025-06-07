@@ -117,13 +117,6 @@ The agent will decide when to query the MCP server to fetch data.
 ```bash
 uv run main.py prompt
 ```
-
-Example:
-
-```
-Show me all red cars from 2020
-```
-
 ---
 
 ### ✅ `check-db`
@@ -133,14 +126,6 @@ Check that the database connection is functional and print a status report.
 ```bash
 uv run main.py check-db
 ```
-
-Expected output:
-
-```
-Connected to database at carros.db
-Total cars: 100
-```
-
 ---
 
 ## 🧪 Example Workflow
@@ -153,7 +138,7 @@ Follow this step-by-step to run everything:
 uv run main.py seed-db --reseed
 ```
 
-### 2. Start the MCP Server (in a new terminal)
+### 2. Start the MCP Server
 
 ```bash
 uv run main.py mcp
@@ -174,5 +159,3 @@ uv run main.py prompt
 * The database file (`carros.db`) is created automatically when seeding
 
 ---
-
-Let me know if you want a `Makefile`, CLI autocompletion, or Docker support.
