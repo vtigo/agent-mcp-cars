@@ -1,97 +1,117 @@
-# AGENT MCP CARS
+# 🧠 AGENT MCP CARS
 
-This is a simple implementation of a CLI interface for chatting with an agent, a MCP server and a simple database modelling for cars.
-The goal of this project is to have an agent that can reason about calling a tool that sends a request to a MCP server, who can query the database and return some cars.
+This is a simple implementation of a CLI interface for interacting with an agent that communicates with an MCP server and a car database.
 
-## Running the project
-This guide explains how to run the complete system (MCP server + interactive CLI) from a fresh clone.
+The goal is to build an AI agent that can decide when to call tools — including one that sends a request to an MCP server, which then queries a local car database and returns results.
 
 ---
 
-### 1. Clone the repository
+## 🚀 Running the Project
+
+This guide explains how to run the complete system — including the MCP server, CLI interface, and database.
+
+---
+
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
 cd REPO_NAME
 ```
 
-### 2. Set up environment variables
-Create a `.env` file in the root of the project with the following content:
+2. Set Up Environment Variables
 
-```env
+Create a .env file in the root of the project:
+
+```python
 DATABASE_URL=sqlite:///./carros.db
 TOGETHER_API_KEY=sk-<your-together-api-key>
 MCP_HOST=127.0.0.1
 MCP_PORT=3333
 ```
 
-> **Note:** If you're not using Together.ai, you can omit the `TOGETHER_API_KEY` line.
+💡 If you're not using Together.ai, you can omit the TOGETHER_API_KEY line.
 
-### 3. Install dependencies
-
-#### Using `uv` (recommended)
+3. Install Dependencies
+✅ Option A: Using uv (recommended)
 
 ```bash
-# This will create the virtual enviroment and install all the dependencies for you
 uv sync
 ```
+This will:
 
-#### Or using standard `pip`
+    Create the virtual environment
+
+    Install all dependencies from uv.lock
+
+    Set up the environment for running CLI commands via uv run
+
+✅ Option B: Using pip
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate      # Linux/macOS
-.venv\Scripts\activate       # Windows
+.venv\Scripts\activate         # Windows
 pip install -r requirements.txt
 ```
 
-## The CLI 
-To run the cli u can ...
+Commands Reference
 
-or
+All commands are run via:
 
-```bash
-# Run script that creates tables and populates with fake data
-PYTHONPATH=src python main.py {command}
-```
+    uv run main.py <command> (if using uv)
+    or
+    PYTHONPATH=src python main.py <command>
 
-### Seed the database (this will create a cars.db file in the root if you dont already have it)
+seed-db – Seed the database
+Populate the database with fake car entries.
 
-```bash
-PYTHONPATH=src python main.py seed
-```
+    uv run main.py seed
 
-### Start the MCP server
-open a dedicated terminal instance (at the project root) and run:
+Optional flags:
 
-```bash
-PYTHONPATH=src python main.py mcp
-```
-you should see:
+    --reseed: Drop and recreate all tables before seeding.
 
-```
+Example:
+    uv run main.py seed --reseed
+
+    mcp – Start the MCP server
+
+Runs the local MCP server.
+
+    uv run main.py mcp
+
+Expected output:
+
 MCP server running at 127.0.0.1:3333 ...
-```
 
-### 6. Run the interactive prompt
+prompt – Run the interactive agent
+Starts an interactive CLI where you can ask questions. The agent will decide when to query the database via the MCP server.
 
-In another terminal (at the project root):
+    uv run main.py prompt
 
-```bash
-PYTHONPATH=src uv run main.py prompt
-```
+check-db – Verify database connection
+Check that the database connection is functional and print a summary.
 
-Type your questions and wait for the agent to reply (it will query the database when needed).
+    uv run main.py check-db
+
+🔁 Notes
+
+    Replace uv run ... with PYTHONPATH=src python main.py ... if not using uv
+
+    All commands are run from the project root
+
+    The database file will be created automatically as carros.db in the root directory
+
+🛠 Example Workflow
+
+# Seed the database
+uv run main.py seed --reseed
+
+# Start MCP server (in a new terminal)
+uv run main.py mcp
+
+# Open the interactive agent (in another terminal)
+uv run main.py prompt
 
 ---
-
-### Useful commands
-
-* **Check database connection**:
-
-  ```bash
-  PYTHONPATH=src uv run main.py check-db
-  ```
-```
-```
-
