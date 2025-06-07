@@ -85,7 +85,7 @@ All commands are run from the **project root** using either:
 ```bash
 uv run main.py <command>
 # OR (if not using uv)
-PYTHONPATH=src python main.py <command>
+python main.py <command>
 ```
 
 ### 📅 `seed-db`
@@ -94,7 +94,7 @@ Populate the database with fake car entries.
 It also creates the database if it doesn't exist.
 
 ```bash
-uv run main.py seed-db
+python main.py seed-db
 ```
 
 > 💡 **Optional flag:**
@@ -103,7 +103,7 @@ uv run main.py seed-db
 Example:
 
 ```bash
-uv run main.py seed-db --reseed
+python main.py seed-db --reseed
 ```
 
 ---
@@ -113,7 +113,7 @@ uv run main.py seed-db --reseed
 Start the local MCP server.
 
 ```bash
-uv run main.py mcp
+python main.py mcp
 ```
 
 Expected output:
@@ -130,7 +130,7 @@ Starts an interactive CLI where you can ask the agent questions.
 The agent will decide when to query the MCP server to fetch data.
 
 ```bash
-uv run main.py prompt
+python main.py prompt
 ```
 
 ---
@@ -140,7 +140,7 @@ uv run main.py prompt
 Check that the database connection is functional and print a status report.
 
 ```bash
-uv run main.py check-db
+python main.py check-db
 ```
 
 ---
@@ -152,19 +152,19 @@ Follow this step-by-step to run everything:
 ### 1. Seed the Database
 
 ```bash
-uv run main.py seed-db --reseed
+python main.py seed-db --reseed
 ```
 
 ### 2. Start the MCP Server
 
 ```bash
-uv run main.py mcp
+python main.py mcp
 ```
 
 ### 3. Start the Interactive CLI Agent (in another terminal)
 
 ```bash
-uv run main.py prompt
+python main.py prompt
 ```
 
 ---
@@ -172,7 +172,6 @@ uv run main.py prompt
 ## 📌 Notes
 
 * All commands assume you're in the **project root**
-* Replace `uv run` with `PYTHONPATH=src python` if not using `uv`
 * The database file (`cars.db`) is created automatically when seeding
 
 ---
