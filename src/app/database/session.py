@@ -9,10 +9,10 @@ load_dotenv()
 engine = create_engine(DATABASE_URL, future=True)
 Session = sessionmaker(engine)
 
-def check_database_connection():
+def check_database_connection() ->  bool:
     try:
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
-        print("Connection with database confirmed.")
+            return True
     except Exception as e:
-        print(f"Failed to connect with to the database: {e}")
+        return False

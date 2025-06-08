@@ -10,6 +10,39 @@ The goal is to build an AI agent that decides when to send requests to the MCP s
 Agent ──▶ MCP Server ──▶ Database  
        ◀───────────────────────
 ```
+---
+## Project structure
+
+```bash
+├── cars.db # SQLite database, create with the seed script
+├── main.py # Main entry point
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+├── scripts
+│   ├── read_db.py # Look at every entry in the database
+│   └── start_mcp_server.py # Run the MCP server
+├── src
+│   └── app
+│       ├── agent
+│       │   ├── agent_llm.py
+│       │   └── tools.py
+│       ├── cli
+│       │   ├── interface.py
+│       ├── database
+│       │   ├── config.py
+│       │   ├── seed.py
+│       │   └── session.py
+│       ├── mcp
+│       │   ├── client.py
+│       │   └── server.py
+│       ├── models
+│       │   └── car.py
+│       └── runner.py # Run the CLI with commands
+├── tests
+│   └── test.py
+└── uv.lock
+```
 
 ---
 
@@ -58,14 +91,10 @@ TOGETHER_API_KEY=sk-<your-together-api-key>
 #### ✅ Option A: Using `uv` (recommended)
 
 ```bash
-uv sync
+v sync
+source .venv/bin/activate      # Linux/macOS
+.venv\Scripts\activate         # Windows
 ```
-
-This will:
-
-* Create a `.venv/` if one doesn’t exist
-* Install dependencies from `uv.lock`
-* Prepare the environment for use with `uv run`
 
 #### ✅ Option B: Using `pip`
 

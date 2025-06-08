@@ -1,3 +1,4 @@
+import os
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
 from langgraph.prebuilt import create_react_agent
@@ -6,10 +7,13 @@ from langgraph.checkpoint.memory import InMemorySaver
 
 load_dotenv()
 
+llm_model = os.getenv("LLM_MODEL", "meta-llama/Llama-3.3-70B-Instruct-Turbo")
+llm_provider = os.getenv("LLM_PROVIDER", "together")
+
 # Initialize the language model
 model = init_chat_model(
-        "meta-llama/Llama-3.3-70B-Instruct-Turbo",
-        model_provider="together",
+        llm_model,
+        model_provider=llm_provider,
         max_tokens=512
         )
 
