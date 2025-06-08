@@ -1,7 +1,6 @@
 # 🚗 AGENT MCP CARS
 
 [![Python](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 An interactive CLI agent that communicates with an MCP server to query a car database.
 The goal is to build an AI agent that decides when to send requests to the MCP server — which then queries the database and returns the results.
@@ -40,7 +39,7 @@ Agent ──▶ MCP Server ──▶ Database
 │       │   └── car.py
 │       └── runner.py # Run the CLI with commands
 ├── tests
-│   └── test.py
+│   └── test_agent.py
 └── uv.lock
 ```
 
@@ -91,7 +90,7 @@ TOGETHER_API_KEY=sk-<your-together-api-key>
 #### ✅ Option A: Using `uv` (recommended)
 
 ```bash
-v sync
+uv sync
 source .venv/bin/activate      # Linux/macOS
 .venv\Scripts\activate         # Windows
 ```

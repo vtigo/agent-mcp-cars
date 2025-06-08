@@ -7,8 +7,8 @@ from langgraph.checkpoint.memory import InMemorySaver
 
 load_dotenv()
 
-llm_model = os.getenv("LLM_MODEL", "meta-llama/Llama-3.3-70B-Instruct-Turbo")
-llm_provider = os.getenv("LLM_PROVIDER", "together")
+llm_model = "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+llm_provider = "together"
 
 # Initialize the language model
 model = init_chat_model(
